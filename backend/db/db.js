@@ -1,10 +1,7 @@
 const mongoose = require('mongoose');
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://balodhivaishnav:Xd7IpsacvTTL7dyP@cluster0.qmj7w.mongodb.net/database', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect('mongodb+srv://balodhivaishnav:Xd7IpsacvTTL7dyP@cluster0.qmj7w.mongodb.net/database')
 .then(() => console.log('MongoDB connected'))
 .catch((err) => console.log('MongoDB connection error: ', err));
 
