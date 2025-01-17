@@ -3,6 +3,14 @@ const router = express.Router();
 const { User, Course, Enrollment } = require("../db/db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const isAdmin = require('../middlewares/admin');
+
+router.get("/", isAdmin, async (req, res) => {
+  const users = await User.find({});
+
+  //add enrolled courses using ref properties of different model
+  res.send(users);
+});
 
 router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
@@ -25,9 +33,19 @@ router.post("/login", async (req, res) => {
     return res.status(401).json({ error: "Authentication failed" });
   }
 
-  const token = jwt.sign({ userId: user._id }, "your-secret-key");
+  const token = jwt.sign(
+    { userId: user._id, role: user.role },
+    "your-secret-key"
+  );
 
-  res.json(token)
+  res.json({ token });
 });
+
+router.delete("/:userId", async (req, res)=>{
+  await User.deleteOne({_id:req.params.userId});
+
+  // User.remove({ _id: req.params.userId })
+  res.send("deleted")
+})
 
 module.exports = router;
