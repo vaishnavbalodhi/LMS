@@ -14,7 +14,7 @@ app.use("/courses", courseRoutes )
 
 app.get("/", (req, res) => {
     res.send("Done")
-})    
+})
 
 app.listen(3000, () => {
     console.log("server is on " + 3000);
